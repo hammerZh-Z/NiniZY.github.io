@@ -190,6 +190,134 @@
             
 
   
+    <article id="post-My-New-Post" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/01/08/My-New-Post/" target="_blank">My New Post</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/01/08/My-New-Post/" class="archive-article-date">
+        <time datetime="2020-01-08T09:32:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h1><ol>
+<li>容错机制，节点存储</li>
+<li>多副本</li>
+<li>流式访问，不支持随机。不支持修改</li>
+<li>大文件和小文件。</li>
+<li>多硬件平台（sats）</li>
+<li>移动计算能力(读数据时，考虑就近原理)<h1 id="MAPREDUCE"><a href="#MAPREDUCE" class="headerlink" title="MAPREDUCE"></a>MAPREDUCE</h1><h1 id="YARN"><a href="#YARN" class="headerlink" title="YARN"></a>YARN</h1><h1 id="HIVE"><a href="#HIVE" class="headerlink" title="HIVE"></a>HIVE</h1></li>
+</ol>
+<p>#大数据结构</p>
+<ol>
+<li>Master/slave</li>
+<li>选举用的 Master/slave(去中心化)</li>
+</ol>
+<h2 id="metaDATA-包含"><a href="#metaDATA-包含" class="headerlink" title="metaDATA(包含)"></a>metaDATA(包含)</h2><p>1 file.txt 3 3<br>2 blk<br>3 用户权限</p>
+<h2 id="hdfs节点"><a href="#hdfs节点" class="headerlink" title="hdfs节点"></a>hdfs节点</h2><ol>
+<li>心跳 判断节点是否毁坏 </li>
+<li>节点坏以后，数据继续拷贝三分 </li>
+<li>一般安装都在局域网内，保证网络的节点。</li>
+<li>节点服役，（配置 /etc/profile）</li>
+<li>自建DNS服务</li>
+<li>metaData(nameNode 256G内存)<h2 id="namenode挂了"><a href="#namenode挂了" class="headerlink" title="namenode挂了"></a>namenode挂了</h2></li>
+<li>nameNode</li>
+<li></li>
+</ol>
+<h1 id="dfs内存选型"><a href="#dfs内存选型" class="headerlink" title="dfs内存选型"></a>dfs内存选型</h1><ol>
+<li>metadata 4.5G</li>
+<li>200多个节点<br>3、2PB<br>4、256G内存</li>
+</ol>
+<h2 id="namenode"><a href="#namenode" class="headerlink" title="namenode"></a>namenode</h2><ol>
+<li>edits文件</li>
+<li>fsimage 存储合并的edit文件</li>
+<li>check point </li>
+<li>3个block在两个rack</li>
+</ol>
+<h2 id="启动过程"><a href="#启动过程" class="headerlink" title="启动过程"></a>启动过程</h2><ol>
+<li>version</li>
+<li>加载全练 和继续合并</li>
+<li>reported 汇报内容是block属于整个文件拆分。</li>
+<li>report 内容是metaData。通过心跳汇报给NN</li>
+<li></li>
+</ol>
+<h2 id="SCN"><a href="#SCN" class="headerlink" title="SCN"></a>SCN</h2><ol>
+<li>HDFS异构存储 可以通过配置的方式进行文件的存储配置</li>
+<li>数据冷热，进行存储介质的选择</li>
+<li></li>
+</ol>
+<h2 id="分布式计算"><a href="#分布式计算" class="headerlink" title="分布式计算"></a>分布式计算</h2><h2 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h2><ol>
+<li>MRAppMater</li>
+<li>MPIAppMaster</li>
+<li>公平调度、容量调度</li>
+<li>资源控制。多个队列，每个队列设置计算资源/</li>
+<li>fair 、capacity</li>
+<li></li>
+</ol>
+<h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/01/08/My-New-Post/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
