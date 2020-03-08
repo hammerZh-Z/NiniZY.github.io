@@ -190,6 +190,217 @@
             
 
   
+    <article id="post-Linux7连接VPN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/03/08/Linux7%E8%BF%9E%E6%8E%A5VPN/" target="_blank">Linux7连接VPN</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/03/08/Linux7%E8%BF%9E%E6%8E%A5VPN/" class="archive-article-date">
+        <time datetime="2020-03-08T10:24:19.674Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="CentOS7连接VPN"><a href="#CentOS7连接VPN" class="headerlink" title="CentOS7连接VPN"></a>CentOS7连接VPN</h1><h2 id="任务背景"><a href="#任务背景" class="headerlink" title="任务背景"></a>任务背景</h2><pre><code>CentOS7需要远程连接外部网络。</code></pre><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><h3 id="安装需要的软件"><a href="#安装需要的软件" class="headerlink" title="安装需要的软件"></a>安装需要的软件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ppp pptp pptp-setup</span><br></pre></td></tr></table></figure>
+
+<h3 id="新建一个连接"><a href="#新建一个连接" class="headerlink" title="新建一个连接"></a>新建一个连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pptpsetup --create&lt;定义的名称&gt; --server&lt;服务器&gt;  --username &lt;用户名&gt; --password &lt;密码&gt; [--start]</span><br></pre></td></tr></table></figure>
+<p>2.新建连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pptpsetup --create PPTP --server 11.126.34.74 --username jack --password 123</span><br></pre></td></tr></table></figure>
+
+
+<p>3.开始连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pppd call PPTP updetach</span><br></pre></td></tr></table></figure>
+
+
+<p>如果出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LCP terminated by peer (MPPE required but peer refused)</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vi &#x2F;etc&#x2F;ppp&#x2F;peers&#x2F;PPTP</span><br><span class="line"></span><br><span class="line">在后面增加</span><br><span class="line"></span><br><span class="line">require-mppe-128</span><br></pre></td></tr></table></figure>
+
+<p>连接成功会出现以下提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Using interface ppp0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connect: ppp0 &lt;–&gt; &#x2F;dev&#x2F;pts&#x2F;2</span><br><span class="line"></span><br><span class="line">CHAP authentication succeeded</span><br><span class="line"></span><br><span class="line">MPPE 128-bit stateless compression enabled</span><br><span class="line"></span><br><span class="line">local IP address 192.168.120.14</span><br><span class="line"></span><br><span class="line">remote IP address 192.168.120.1</span><br></pre></td></tr></table></figure>
+
+
+<p>4.检查是否连接上</p>
+<p>ifconfig</p>
+<p>出现ppp0说明已连接</p>
+<p>5.将所有对外网络设置为通过ppp0</p>
+<p>查看路由设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo route -n</span><br><span class="line"></span><br><span class="line">sudo route add -net 0.0.0.0 dev ppp0</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>关闭连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo killall pppd</span><br></pre></td></tr></table></figure>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/03/08/Linux7%E8%BF%9E%E6%8E%A5VPN/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ES作为Spark的写入数据源基本操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">ES作为Spark的写入数据源基本操作</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
+        <time datetime="2020-01-19T07:19:19.952Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><pre><code>开发过程中，根据项目的需求，需要实现使用Spark在ES中创建索引。</code></pre><h1 id="一、实现流程"><a href="#一、实现流程" class="headerlink" title="一、实现流程"></a>一、实现流程</h1><pre><code>数据流程如下</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[Oracle]--&gt;|数据上传|B[SparkSQL]</span><br><span class="line">B--&gt;|创建索引|C[ES]</span><br></pre></td></tr></table></figure>
+<h1 id="二、实现细节"><a href="#二、实现细节" class="headerlink" title="二、实现细节"></a>二、实现细节</h1><h2 id="基本的操作"><a href="#基本的操作" class="headerlink" title="基本的操作"></a>基本的操作</h2><h3 id="需要引用的头文件"><a href="#需要引用的头文件" class="headerlink" title="需要引用的头文件"></a>需要引用的头文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.spark.rdd.RDD</span><br><span class="line">import org.apache.spark.sql.types.&#123;StringType, StructField, StructType&#125;</span><br><span class="line">import org.apache.spark.sql.&#123;DataFrame, Row&#125;</span><br><span class="line">import org.apache.spark.&#123;SparkConf, SparkContext&#125;</span><br><span class="line">import org.elasticsearch.spark.sql.EsSparkSQL</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置SparkContext"><a href="#配置SparkContext" class="headerlink" title="配置SparkContext"></a>配置SparkContext</h3><pre><code>object SparkRdd{ //定义的类
+def getSparkContext():SparkContext={
+  //进行Context配置
+  // org.elasticsearch.hadoop.cfg.ConfigurationOptions 这个类中记录了ES的配置信息
+    val conf = new SparkConf().setAppName(&quot;AppName&quot;).setMaster(&quot;local&quot;)
+    conf.set(&quot;es.index.auto.create&quot;, &quot;true&quot;) //设置Index自动增长
+      .set(&quot;cluster.name&quot;,&quot;cet-es&quot;)          //设置集群名称
+      .set(&quot;serverPort&quot;,&quot;9200&quot;)              //设置服务端口
+      .set(&quot;es.nodes&quot;,&quot;192.168.3.151&quot;)       //设置es节点名称
+      .set(&quot;es.nodes.wan.only&quot;,&quot;true&quot;)       //设置使用域名访问
+    new SparkContext(conf)                   //根据以上的配置文件，创建SparkContext
+  }
+  def main(args: Array[String]): Unit = {
+val sc = getSparkContext
+    //数据写到ES时，参数名称可以作为列名
+    case class Trip(departure: String, arrival: String) //创建类的时候，可以像创建变量一样
+
+    val upcomingTrip = Trip(&quot;OTP&quot;, &quot;SFO&quot;)//创建类
+    val lastWeekTrip = Trip(&quot;MUC&quot;, &quot;OTP&quot;)
+    val trip = sc.makeRDD(
+      Seq(upcomingTrip, lastWeekTrip)
+    )
+    //trip:是根据行程创建的RDD
+    //spark/docs：是指定数据需要存入ES中的{Index/Type}
+    //es.mapping.id:指明departure作为ES中数据的ID
+    EsSpark.saveToEs(trip,&quot;spark/docs&quot;, Map(&quot;es.mapping.id&quot; -&gt; &quot;departure&quot;))
+
+}
+}</code></pre>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-My-New-Post" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

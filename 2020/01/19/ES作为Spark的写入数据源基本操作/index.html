@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | StillWater</title>
+  <title>ES作为Spark的写入数据源基本操作 | StillWater</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="StillWater">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="背景开发过程中，根据项目的需求，需要实现使用Spark在ES中创建索引。一、实现流程数据流程如下123graph LRA[Oracle]--&gt;|数据上传|B[SparkSQL]B--&gt;|创建索引|C[ES] 二、实现细节基本的操作需要引用的头文件12345import org.apache.spark.rdd.RDDimport org.apache.spark.sql.types.&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES作为Spark的写入数据源基本操作">
+<meta property="og:url" content="http://yoursite.com/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="StillWater">
+<meta property="og:description" content="背景开发过程中，根据项目的需求，需要实现使用Spark在ES中创建索引。一、实现流程数据流程如下123graph LRA[Oracle]--&gt;|数据上传|B[SparkSQL]B--&gt;|创建索引|C[ES] 二、实现细节基本的操作需要引用的头文件12345import org.apache.spark.rdd.RDDimport org.apache.spark.sql.types.&amp;">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-19T07:19:19.952Z">
+<meta property="article:modified_time" content="2020-01-19T07:16:13.868Z">
 <meta property="article:author" content="Hammer">
 <meta name="twitter:card" content="summary">
   
@@ -183,150 +187,263 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ES作为Spark的写入数据源基本操作" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/03/08/Linux7%E8%BF%9E%E6%8E%A5VPN/" class="archive-article-date">
-        <time datetime="2020-03-08T10:24:19.674Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-08</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/03/08/Linux7%E8%BF%9E%E6%8E%A5VPN/" target="_blank">Linux7连接VPN</a>
   
+    <h1 class="article-title" itemprop="name">
+      ES作为Spark的写入数据源基本操作
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
         <time datetime="2020-01-19T07:19:19.952Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-19</time>
 </a>
 
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">386字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">1分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><pre><code>开发过程中，根据项目的需求，需要实现使用Spark在ES中创建索引。</code></pre><h1 id="一、实现流程"><a href="#一、实现流程" class="headerlink" title="一、实现流程"></a>一、实现流程</h1><pre><code>数据流程如下</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[Oracle]--&gt;|数据上传|B[SparkSQL]</span><br><span class="line">B--&gt;|创建索引|C[ES]</span><br></pre></td></tr></table></figure>
+<h1 id="二、实现细节"><a href="#二、实现细节" class="headerlink" title="二、实现细节"></a>二、实现细节</h1><h2 id="基本的操作"><a href="#基本的操作" class="headerlink" title="基本的操作"></a>基本的操作</h2><h3 id="需要引用的头文件"><a href="#需要引用的头文件" class="headerlink" title="需要引用的头文件"></a>需要引用的头文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.spark.rdd.RDD</span><br><span class="line">import org.apache.spark.sql.types.&#123;StringType, StructField, StructType&#125;</span><br><span class="line">import org.apache.spark.sql.&#123;DataFrame, Row&#125;</span><br><span class="line">import org.apache.spark.&#123;SparkConf, SparkContext&#125;</span><br><span class="line">import org.elasticsearch.spark.sql.EsSparkSQL</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置SparkContext"><a href="#配置SparkContext" class="headerlink" title="配置SparkContext"></a>配置SparkContext</h3><pre><code>object SparkRdd{ //定义的类
+def getSparkContext():SparkContext={
+  //进行Context配置
+  // org.elasticsearch.hadoop.cfg.ConfigurationOptions 这个类中记录了ES的配置信息
+    val conf = new SparkConf().setAppName(&quot;AppName&quot;).setMaster(&quot;local&quot;)
+    conf.set(&quot;es.index.auto.create&quot;, &quot;true&quot;) //设置Index自动增长
+      .set(&quot;cluster.name&quot;,&quot;cet-es&quot;)          //设置集群名称
+      .set(&quot;serverPort&quot;,&quot;9200&quot;)              //设置服务端口
+      .set(&quot;es.nodes&quot;,&quot;192.168.3.151&quot;)       //设置es节点名称
+      .set(&quot;es.nodes.wan.only&quot;,&quot;true&quot;)       //设置使用域名访问
+    new SparkContext(conf)                   //根据以上的配置文件，创建SparkContext
+  }
+  def main(args: Array[String]): Unit = {
+val sc = getSparkContext
+    //数据写到ES时，参数名称可以作为列名
+    case class Trip(departure: String, arrival: String) //创建类的时候，可以像创建变量一样
+
+    val upcomingTrip = Trip(&quot;OTP&quot;, &quot;SFO&quot;)//创建类
+    val lastWeekTrip = Trip(&quot;MUC&quot;, &quot;OTP&quot;)
+    val trip = sc.makeRDD(
+      Seq(upcomingTrip, lastWeekTrip)
+    )
+    //trip:是根据行程创建的RDD
+    //spark/docs：是指定数据需要存入ES中的{Index/Type}
+    //es.mapping.id:指明departure作为ES中数据的ID
+    EsSpark.saveToEs(trip,&quot;spark/docs&quot;, Map(&quot;es.mapping.id&quot; -&gt; &quot;departure&quot;))
+
+}
+}</code></pre>
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">ES作为Spark的写入数据源基本操作</a>
-  
-    </h1>
-  
+      </a>
+    </div>
+    
 
-
-        <div class="article-info info-on-right">
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Hammer
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://yoursite.com/2020/01/19/ES作为Spark的写入数据源基本操作/" title="ES作为Spark的写入数据源基本操作" target="_blank">http://yoursite.com/2020/01/19/ES作为Spark的写入数据源基本操作/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
-          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
 
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/01/19/ES%E4%BD%9C%E4%B8%BASpark%E7%9A%84%E5%86%99%E5%85%A5%E6%95%B0%E6%8D%AE%E6%BA%90%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/01/08/My-New-Post/" class="archive-article-date">
-        <time datetime="2020-01-08T09:32:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-08</time>
-</a>
 
+
+<nav id="article-nav">
+  
+    <a href="/2020/03/08/Linux7%E8%BF%9E%E6%8E%A5VPN/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux7连接VPN
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/08/My-New-Post/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">My New Post</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/01/08/My-New-Post/" target="_blank">My New Post</a>
-  
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/01/07/hello-world/" class="archive-article-date">
-        <time datetime="2020-01-07T06:50:59.121Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/01/07/hello-world/" target="_blank">Hello World</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+
+
+
+
 
 
           </div>
@@ -367,8 +484,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
